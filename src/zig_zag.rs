@@ -1,4 +1,4 @@
-struct Solution {}
+pub struct Solution {}
 
 impl Solution {
     fn convert(s: String, num_row: i32) -> String {
