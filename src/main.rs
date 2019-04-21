@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod interval_list_intersections;
+mod merge_intervals;
 
 pub fn main() {
     // swap_pairs::Solution::swap_pairs(head: Option<Box<ListNode>>);
