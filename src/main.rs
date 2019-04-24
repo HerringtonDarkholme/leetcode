@@ -2,8 +2,8 @@
 
 #[macro_use]
 mod util;
-mod merge_intervals;
+mod regular_expression_matching;
 
 pub fn main() {
-    // swap_pairs::Solution::swap_pairs(head: Option<Box<ListNode>>);
+    regular_expression_matching::Solution::is_match("test".to_owned(), "test".to_owned());
 }
