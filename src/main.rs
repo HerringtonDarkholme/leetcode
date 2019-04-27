@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod palindrome_number;
+mod palindrom_linked_list;
 
 pub fn main() {
 }

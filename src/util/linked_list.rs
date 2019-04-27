@@ -15,7 +15,7 @@ impl ListNode {
 }
 
 #[inline]
-fn to_list(vec: Vec<i32>) -> Option<Box<ListNode>> {
+pub fn to_list(vec: Vec<i32>) -> Option<Box<ListNode>> {
     let mut current = None;
     for &v in vec.iter().rev() {
         let mut node = ListNode::new(v);
@@ -27,6 +27,6 @@ fn to_list(vec: Vec<i32>) -> Option<Box<ListNode>> {
 
 #[macro_export]
 macro_rules! linked {
-    ($($e:expr),*) => {to_list(vec![$($e.to_owned()), *])};
-    ($($e:expr,)*) => {to_list(vec![$($e.to_owned()), *])};
+    ($($e:expr),*) => {crate::util::linked_list::to_list(vec![$($e.to_owned()), *])};
+    ($($e:expr,)*) => {crate::util::linked_list::to_list(vec![$($e.to_owned()), *])};
 }
