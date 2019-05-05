@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod palindrom_linked_list;
+mod longest_common_prefix;
 
 pub fn main() {
 }
