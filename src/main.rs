@@ -2,7 +2,12 @@
 
 #[macro_use]
 mod util;
-mod palindrom_linked_list;
+mod permutations;
 
 pub fn main() {
+}
+
+trait View {
+    type Body: View;
+    fn body() -> Self::Body;
 }
