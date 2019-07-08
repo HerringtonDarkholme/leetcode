@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod permutations;
+mod matchsticks_to_sqaure;
 
 pub fn main() {
 }
