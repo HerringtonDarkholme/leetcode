@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod binary_tree_level_order_traversal;
+mod sum_root_to_leaf_numbers;
 
 pub fn main() {
 }
