@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod matchsticks_to_sqaure;
+mod sum_root_to_leaf_numbers;
 
 pub fn main() {
 }
