@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod matchsticks_to_sqaure;
+mod binary_tree_level_order_traversal;
 
 pub fn main() {
 }
