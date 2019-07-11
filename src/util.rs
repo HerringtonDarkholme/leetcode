@@ -6,5 +6,3 @@ pub mod tree;
 
 #[macro_use]
 pub mod vec;
-
-pub mod tree;

@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod sum_root_to_leaf_numbers;
+mod binary_tree_maximum_path_sum;
 
 pub fn main() {
 }
