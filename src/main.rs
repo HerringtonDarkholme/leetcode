@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod binary_tree_maximum_path_sum;
+mod palindrome_partition_ii;
 
 pub fn main() {
 }
