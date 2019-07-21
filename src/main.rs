@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod palindrome_partition_ii;
+mod four_sum;
 
 pub fn main() {
 }
