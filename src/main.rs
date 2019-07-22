@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod four_sum;
+mod four_sum_count;
 
 pub fn main() {
 }
