@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod four_sum_count;
+mod find_frequent_tree_sum;
 
 pub fn main() {
 }
