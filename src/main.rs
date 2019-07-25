@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod rotate_array;
+mod is_rational_equal;
 
 pub fn main() {
 }
