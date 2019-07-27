@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod is_rational_equal;
+mod min_swaps_couples;
 
 pub fn main() {
 }
