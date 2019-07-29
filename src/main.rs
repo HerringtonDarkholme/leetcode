@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod min_swaps_couples;
+mod largest_divisible_subset;
 
 pub fn main() {
 }
