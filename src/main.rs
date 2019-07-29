@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod largest_divisible_subset;
+mod remove_k_digits;
 
 pub fn main() {
 }
