@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-mod remove_k_digits;
+mod monotone_increasing_digits;
 
 pub fn main() {
 }
