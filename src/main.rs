@@ -2,9 +2,9 @@
 
 #[macro_use]
 mod util;
-mod monotone_increasing_digits;
+pub mod number_of_atoms;
 
-pub fn main() {
+fn main() {
 }
 
 trait View {
