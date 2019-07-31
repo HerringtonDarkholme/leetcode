@@ -15,10 +15,7 @@ impl Solution {
     pub fn count_of_atoms(formula: String) -> String {
         let mut map = BTreeMap::new();
         let chars: Vec<char> = formula.chars().collect();
-        let mut i = 0;
-        while i < chars.len() {
-            i = Solution::analyze_one_paren(&chars, i, &mut map);
-        }
+        Solution::analyze_one_paren(&chars, 0, &mut map);
         map.into_iter()
             .map(|(k, v)| if v > 1  { format!("{}{}", k, v) } else { k })
             .collect::<Vec<String>>()
@@ -34,7 +31,7 @@ impl Solution {
         while i < len {
             let c = chars[i];
             match c {
-                'A'...'Z' => {
+                'A'..='Z' => {
                     match state {
                         State::InCloseParen | State::InParenNumber => {
                             break;
@@ -49,10 +46,10 @@ impl Solution {
                     count = 1;
                     state = State::InName;
                 },
-                'a'...'z' if state == State::InName => {
+                'a'..='z' if state == State::InName => {
                     name.push(c);
                 },
-                '0'...'9' => {
+                '0'..='9' => {
                     let cnt = c.to_digit(10).unwrap();
                     match state {
                         State::InName => {
@@ -63,15 +60,17 @@ impl Solution {
                             state = State::InParenNumber;
                             count = cnt;
                         },
-                        _ => {
-                            count = count * 10 + c.to_digit(10).unwrap();
+                        State::InParenNumber | State::InNameNumber => {
+                            count = count * 10 + cnt;
+                        },
+                        State::InParen => {
+                            panic!("impossilbe")
                         },
                     }
                 },
                 '(' => {
                     match state {
                         State::InCloseParen | State::InParenNumber => {
-                            i += 1;
                             break;
                         },
                         State::InName | State::InNameNumber => {
@@ -79,8 +78,9 @@ impl Solution {
                         },
                         State::InParen => {},
                     }
-                    i = Solution::analyze_one_paren(chars, i + 1, &mut sub_map);
-                    count = 1;
+                    // compensate for the i += 1 in the looping
+                    i = Solution::analyze_one_paren(chars, i + 1, &mut sub_map) - 1;
+                    count = 1; //reset count if i > len
                     state = State::InParen;
                 },
                 ')' => {
@@ -89,10 +89,9 @@ impl Solution {
                             *sub_map.entry(name.clone()).or_insert(0) += count;
                         },
                         State::InCloseParen | State::InParenNumber => {
-                            i -= 1;
                             break;
                         },
-                        _ => {},
+                        State::InParen => {},
                     }
                     state = State::InCloseParen;
                     count = 1;
@@ -104,6 +103,7 @@ impl Solution {
         match state {
             State::InName | State::InNameNumber => {
                 *sub_map.entry(name.clone()).or_insert(0) += count;
+                count = 1; // reset count for final liquidation
             },
             _ => {}
         }
@@ -114,13 +114,27 @@ impl Solution {
     }
 }
 
-// "Mg(OH)2"
-// "K4(ON(SO3)2)2"
-// "H2O"
-// "(H2O2)"
-// "(H2O2)3"
-// "((O)3)2"
-// "((O))2"
-// "(O)(O)"
-// "(O)(O)(H)"
-// "(H)2(O)1"
+#[test]
+fn test() {
+    use crate::util::test::test_cases;
+
+    for i in vec![
+        "Mg(OH)2",
+        "((O)2)2",
+        "K4(ON(SO3)2)2",
+        "H2O",
+        "(H2O2)",
+        "(H2O2)3",
+        "((O)3)2",
+        "((O))2",
+        "(O)(O)",
+        "(O)(O)(H)",
+        "(H)2(O)1",
+        "((N)1(O)1(C)1)",
+        "((N42)24(OB40Li30CHe3O48LiNN26)33(C12Li48N30H13HBe31)21(BHN30Li26BCBe47N40)15(H5)16)14",
+        "Be32",
+        "H3Be32",
+    ] {
+        println!("{}", Solution::count_of_atoms(i.to_string()));
+    }
+}
