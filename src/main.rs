@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod number_of_atoms;
+pub mod replace_words;
 
 fn main() {
 }
