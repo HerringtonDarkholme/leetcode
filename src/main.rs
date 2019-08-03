@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod parse_bool_expr;
+pub mod course_schedule;
 
 fn main() {
 }
