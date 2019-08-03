@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod reverse_string_ii;
+pub mod parse_bool_expr;
 
 fn main() {
 }
