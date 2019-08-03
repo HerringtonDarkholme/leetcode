@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod course_schedule;
+pub mod course_schedule_ii;
 
 fn main() {
 }
