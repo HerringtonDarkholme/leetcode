@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod min_height_trees;
+pub mod max_sum_of_three_subarrays;
 
 fn main() {
 }
