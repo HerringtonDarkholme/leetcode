@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod course_schedule_ii;
+pub mod min_height_trees;
 
 fn main() {
 }
