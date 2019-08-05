@@ -2,7 +2,7 @@ struct Solution;
 
 impl Solution {
     pub fn kth_grammar(n: i32, k: i32) -> i32 {
-        (k - 1).count_ones() % 2
+        (k - 1).count_ones() as i32 % 2
         // let mut k = k - 1;
         // let mut r = 0;
         // while k > 0 {
