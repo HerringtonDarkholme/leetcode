@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod max_sum_of_three_subarrays;
+pub mod network_delay_time;
 
 fn main() {
 }
