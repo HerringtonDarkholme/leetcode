@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod print_binary_tree;
+pub mod first_missing_positive;
 
 fn main() {
 }
