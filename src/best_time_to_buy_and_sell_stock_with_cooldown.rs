@@ -1,28 +1,36 @@
 pub struct Solution;
 
+// To sovle this problem with DP, we can give 2 definition :
+// 1.buy[i], means the max profit we can get if the status end with buy([buy,cooldown,cooldown] also means end with buy) at i-th day(i=0,1,2...)
+// 2.sell[i], means the max profit we can get if the status end with sell([sell,cooldown,cooldown] also means end with sell) at i-th day(i=0,1,2...)
 impl Solution {
     pub fn max_profit(prices: Vec<i32>) -> i32 {
-        let mut cache = vec![-1; prices.len()];
-        Solution::aux(&prices, 0, &mut cache)
-    }
-    fn aux(prices: &[i32], start: usize, cache: &mut [i32]) -> i32 {
-        if start >= cache.len() {
+        if prices.len() <= 1 {
             return 0
         }
-        if cache[start] >= 0 {
-            return cache[start]
+        if prices.len() == 2 {
+            return 0.max(prices[1] - prices[0])
         }
-        let mut r = 0;
-        for i in (start + 1)..prices.len() {
-            if prices[start] > prices[i] {
-                r = r.max(Solution::aux(prices, i, cache));
-            } else {
-                let tmp = prices[i] - prices[start];
-                r = r.max(tmp + Solution::aux(prices, i + 2, cache));
-            }
+        let mut buy = vec![0; prices.len()];
+        let mut sell = vec![0; prices.len()];
+        buy[0] = -prices[0]; // buy on day1, we have negative asset
+        buy[1] = buy[0].max(-prices[1]); // hold on: asset = buy[0], or buy 1-st day stock
+        sell[0] =  0; // nothing sell on day1
+        sell[1] = sell[0].max(prices[1] + buy[0]); // hold on, or sell on 1-st day
+        for i in 2..prices.len() {
+            // To calculate buy[i]:
+            // 1.If we choose to buy at i-th day, then buy[i] = sell[i-2]-prices[i].
+            // Because the i-1-th day must be cooldown, and we spend prices[i] to buy.
+            // 2.If we choose to cooldown at i-th day, then buy[i] = buy[i-1].Notice this also means end with buy.
+            // So buy[i] = max(sell[i-2]-prices[i],buy[i-1])
+            buy[i] = buy[i - 1].max(sell[i - 2] - prices[i]);
+            // To calculate sell[i]:
+            // 1.If we choose to sell at i-th day, then sell[i] = buy[i-1]+prices[i].
+            // 2.If we choose to cooldown at i-th day, then sell[i] = sell[i-1].
+            // So sell[i] = max(buy[i-1]+prices[i],sell[i-1])
+            sell[i] = sell[i - 1].max(buy[i-1] + prices[i]);
         }
-        cache[start] = r;
-        r
+        sell[prices.len() - 1]
     }
 }
 
