@@ -1,5 +1,6 @@
 pub struct Solution;
 
+/*
 // To sovle this problem with DP, we can give 2 definition :
 // 1.buy[i], means the max profit we can get if the status end with buy([buy,cooldown,cooldown] also means end with buy) at i-th day(i=0,1,2...)
 // 2.sell[i], means the max profit we can get if the status end with sell([sell,cooldown,cooldown] also means end with sell) at i-th day(i=0,1,2...)
@@ -33,6 +34,34 @@ impl Solution {
         sell[prices.len() - 1]
     }
 }
+*/
+
+// we can further optimize above cuz we only use last two day
+
+impl Solution {
+    pub fn max_profit(prices: Vec<i32>) -> i32 {
+        let len = prices.len();
+        if len < 2 {
+            return 0
+        }
+        if len == 2 {
+            return 0.max(prices[1] - prices[0])
+        }
+        let mut buy_last_2 = -prices[0];
+        let mut sell_last_2 = 0;
+        let mut buy_last_1 = buy_last_2.max(-prices[1]);
+        let mut sell_last_1 = sell_last_2.max(buy_last_1 + prices[1]);
+        for i in 2..len {
+            let buy = buy_last_1.max(sell_last_2 - prices[i]);
+            let sell = sell_last_1.max(buy_last_1 + prices[i]);
+            buy_last_2 = buy_last_1;
+            sell_last_2 = sell_last_1;
+            buy_last_1 = buy;
+            sell_last_1 = sell;
+        }
+        sell_last_1
+    }
+}
 
 #[test]
 fn test() {
@@ -43,5 +72,7 @@ fn test() {
         (vec![1, 1, 1, 1], 0),
         (vec![4, 3, 2, 1], 0),
         (vec![], 0),
+        (vec![1], 0),
+        (vec![2, 1], 0),
     ], Solution::max_profit);
 }
