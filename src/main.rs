@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod best_time_to_buy_and_sell_stock_with_cooldown;
+pub mod equation_possible;
 
 fn main() {
 }
