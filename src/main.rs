@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod equation_possible;
+pub mod grid_illumination;
 
 fn main() {
 }
