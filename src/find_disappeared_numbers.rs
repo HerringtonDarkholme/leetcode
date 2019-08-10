@@ -16,6 +16,24 @@ impl Solution {
             .collect()
     }
 }
+/*
+impl Solution {
+    pub fn find_disappeared_numbers(nums: Vec<i32>) -> Vec<i32> {
+        let mut miss_vec = vec![true; nums.len()];
+        for i in nums {
+            miss_vec[i as usize - 1] = false;
+        }
+        miss_vec.into_iter()
+            .enumerate()
+            .filter_map(|(k, missed)| if missed {
+                Some(k as i32 + 1)
+            } else {
+                None
+            })
+            .collect()
+    }
+}
+*/
 
 #[test]
 fn test() {
