@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod first_missing_positive;
+pub mod find_disappeared_numbers;
 
 fn main() {
 }
