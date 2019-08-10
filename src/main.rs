@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod n_queens;
+pub mod n_repeated_element_times;
 
 fn main() {
 }

@@ -19,6 +19,5 @@ impl Solution {
             }
         }
         0
-        // a.windows(2).filter(|v| v[0] == v[1]).next().unwrap()[0]
     }
 }
