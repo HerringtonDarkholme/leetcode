@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod grid_illumination;
+pub mod n_queens;
 
 fn main() {
 }
