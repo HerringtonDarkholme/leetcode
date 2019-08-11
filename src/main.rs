@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod n_repeated_element_times;
+pub mod top_k_frequent;
 
 fn main() {
 }
