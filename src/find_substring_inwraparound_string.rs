@@ -16,6 +16,7 @@ impl Solution {
         }
         // counting how many unique substrings starting with certain char
         // alphabets[0] stands for how many substrings start with "a"
+        // update: use end with semantic is easier
         const N: usize = 26;
         let mut alphabets = vec![0; N];
         let chars: Vec<_> = p.as_bytes().iter().map(|c| c - 'a' as u8).collect();
@@ -26,14 +27,11 @@ impl Solution {
         };
         for i in 0..chars.len() {
             c += 1;
-            if is_next_num_consecutive(i) {
-                continue;
+            let ch = chars[i] as usize;
+            alphabets[ch] = alphabets[ch].max(c as i32);
+            if !is_next_num_consecutive(i) {
+                c = 0;
             }
-            for j in 0..c.min(N) {
-                let ch = chars[i + 1 - c + j] as usize;
-                alphabets[ch] = alphabets[ch].max((c - j) as i32);
-            }
-            c = 0;
         }
         alphabets.iter().sum()
     }
