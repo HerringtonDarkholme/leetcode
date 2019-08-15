@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod find_substring_inwraparound_string;
+pub mod largest_palindrome_product;
 
 fn main() {
 }
