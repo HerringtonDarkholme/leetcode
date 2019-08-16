@@ -6,18 +6,13 @@ impl Solution {
         for c in s.chars() {
             if c == 'a' || c == 'b' {
                 stack.push(c);
+                continue;
             }
-            let b = stack.pop();
-            let a = stack.pop();
+            let b = stack.pop().filter(|c| c == 'b');
+            let a = stack.pop().filter(|c| c == 'a');
             if a.is_none() || b.is_none() {
                 return false
             }
-            let is_b = b.unwrap() == 'b';
-            let is_a = a.unwrap() == 'a';
-            if !is_b || !is_a {
-                return false
-            }
-
         }
         stack.is_empty()
     }
