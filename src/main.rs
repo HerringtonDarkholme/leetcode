@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod largest_palindrome_product;
+pub mod count_digit_one;
 
 fn main() {
 }
