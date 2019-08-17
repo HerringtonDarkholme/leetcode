@@ -2,12 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod project_area_of_3d_shapes;
+pub mod merge_k_sorted_lists;
 
 fn main() {
-}
-
-trait View {
-    type Body: View;
-    fn body() -> Self::Body;
 }
