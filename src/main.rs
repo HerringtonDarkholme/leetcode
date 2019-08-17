@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod count_digit_one;
+pub mod project_area_of_3d_shapes;
 
 fn main() {
 }
