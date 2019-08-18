@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod merge_k_sorted_lists;
+pub mod k_closest;
 
 fn main() {
 }
