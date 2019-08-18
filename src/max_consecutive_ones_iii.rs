@@ -3,18 +3,14 @@ pub struct Solution;
 impl Solution {
     pub fn longest_ones(a: Vec<i32>, mut k: i32) -> i32 {
         let mut i = 0;
-        let mut j = 0;
-        while j < a.len() {
-            k += a[j] - 1;
+        for aj in a.iter() { // remove j's boundary check
+            k += aj - 1;
             if k < 0 {
-                if a[i] == 0 {
-                    k += 1
-                }
+                k += a[i] ^ 1;
                 i += 1;
             }
-            j += 1;
         }
-        (j - i) as i32
+        (a.len() - i) as i32
     }
 }
 
