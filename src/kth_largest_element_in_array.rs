@@ -2,9 +2,11 @@ pub struct Solution;
 
 impl Solution {
     pub fn find_kth_largest(mut nums: Vec<i32>, k: i32) -> i32 {
-        Solution::quick_select(0, nums.len() - 1, &mut nums, k as usize - 1)
-
+        nums.sort();
+        nums[nums.len() - k]
+        // Solution::quick_select(0, nums.len() - 1, &mut nums, k as usize - 1)
     }
+
     fn quick_select(start: usize, end: usize, nums: &mut [i32], k: usize) -> i32 {
         let pivot = nums[end];
         let mut j = start;
