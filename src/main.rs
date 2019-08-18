@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod k_closest;
+pub mod repeated_string_match;
 
 fn main() {
 }
