@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod repeated_string_match;
+pub mod orderly_queue;
 
 fn main() {
 }
