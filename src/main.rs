@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod max_consecutive_ones_iii;
+pub mod consecutive_numbers_sum;
 
 fn main() {
 }
