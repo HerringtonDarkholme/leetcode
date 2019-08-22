@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod consecutive_numbers_sum;
+pub mod set_matrix_zeroes;
 
 fn main() {
 }
