@@ -1,4 +1,19 @@
 pub struct Solution;
+
+use std::collections::HashSet;
+impl Solution {
+    pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
+        let set: HashSet<_> = nums.into_iter().collect();
+        set.iter().fold(0, |max, &n| if !set.contains(&(n-1)) {
+            let longest = (n..).skip_while(|i| set.contains(&i)).next().unwrap();
+            max.max(longest - n)
+        } else {
+            max
+        })
+    }
+}
+
+/*
 use std::collections::{HashMap, HashSet};
 
 impl Solution {
@@ -23,3 +38,4 @@ impl Solution {
         max
     }
 }
+*/
