@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod longest_consecutive_sequence;
+pub mod ways_to_decode;
 
 fn main() {
 }
