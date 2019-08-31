@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod decodes_way_ii;
+pub mod odd_even_list;
 
 fn main() {
 }
