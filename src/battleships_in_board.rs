@@ -10,23 +10,12 @@ impl Solution {
         let mut count = 0;
         for i in 0..row {
             for j in 0..col {
-                if board[i][j] != 'X' {
-                    continue;
-                }
-                count += 1;
-                for k in j..col {
-                    if board[i][k] == 'X' {
-                        board[i][k] = '.';
-                    } else {
-                        break;
-                    }
-                }
-                for k in (i+1)..row {
-                    if board[k][j] == 'X' {
-                        board[k][j] = '.';
-                    } else {
-                        break;
-                    }
+                if board[i][j] == 'X' && (
+                    i == 0 || board[i-1][j] != 'X'
+                ) && (
+                    j == 0 || board[i][j-1] != 'X'
+                ) {
+                    count += 1;
                 }
             }
         }
