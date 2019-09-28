@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod odd_even_list;
+pub mod find_function_arguments;
 
 fn main() {
 }
