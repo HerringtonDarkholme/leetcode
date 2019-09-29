@@ -1,0 +1,25 @@
+var connect = function(root) {
+    let head = root
+    while (head) {
+        let node = head
+        head = null
+        let tail = new Node()
+        while (node) {
+            if (!head) {
+                head = node.left || node.right
+            }
+            let l = node.left
+            if (l) {
+                tail.next = l
+                tail = l
+            }
+            let r = node.right
+            if (r) {
+                tail.next = r
+                tail = r
+            }
+            node = node.next
+        }
+    }
+    return root
+};
