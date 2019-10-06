@@ -1,25 +1,24 @@
 pub struct Solution;
 
 impl Solution {
-    pub fn remove_kdigits(nums: String, k: i32) -> String {
-        let mut k = k as usize;
-        let l = nums.len();
-        let remain = l - k;
-        let mut chars = Vec::with_capacity(l);
-        for n in nums.chars() {
-            let n = n.to_digit(10).unwrap();
-            while k > 0 && !chars.is_empty() && *chars.last().unwrap() > n {
-                chars.pop();
+    pub fn remove_kdigits(num: String, mut k: i32) -> String {
+        let mut stack = vec![];
+        let remain = num.len() - k as usize;
+        for n in num.chars() {
+            while k > 0 && !stack.is_empty() && *stack.last().unwrap() > n {
                 k -= 1;
+                stack.pop();
             }
-            chars.push(n);
+            stack.push(n);
         }
-        let ret = chars.into_iter()
+        let s: String = stack.into_iter()
             .take(remain)
-            .skip_while(|p| *p == 0)
-            .map(|p| p.to_string())
-            .collect::<Vec<String>>()
-            .join("");
-        if ret.is_empty() { "0".to_owned() } else { ret }
+            .skip_while(|&c| c == '0')
+            .collect();
+        if s.is_empty() {
+            "0".to_string()
+        } else {
+            s
+        }
     }
 }
