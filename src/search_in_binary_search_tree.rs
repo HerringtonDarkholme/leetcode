@@ -1,5 +1,5 @@
 pub struct Solution;
-use $crate::util::tree:TreeNoe;
+use crate::util::tree::TreeNoe;
 use std::rc::Rc;
 use std::cell::RefCell;
 impl Solution {

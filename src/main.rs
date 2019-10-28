@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod find_function_arguments;
+pub mod delete_duplicates;
 
 fn main() {
 }

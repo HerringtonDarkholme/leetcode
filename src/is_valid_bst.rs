@@ -1,4 +1,4 @@
-use $crate::util::tree::TreeNode;
+use crate::util::tree::TreeNode;
 pub struct Solution;
 
 use std::rc::Rc;
