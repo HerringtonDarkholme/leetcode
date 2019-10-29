@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod delete_duplicates;
+pub mod reverse_k_group;
 
 fn main() {
 }
