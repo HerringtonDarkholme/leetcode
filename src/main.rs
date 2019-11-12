@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod reverse_k_group;
+pub mod rectangle_area;
 
 fn main() {
 }
