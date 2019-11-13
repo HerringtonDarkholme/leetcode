@@ -1,35 +1,33 @@
 struct Solution {}
 
 impl Solution {
-    fn longest_palindrome(s: String) -> String {
-        let ss: Vec<_>= s.chars().collect();
-        let len = ss.len();
-        let mut max_start = 0;
-        let mut max_end = 0;
-        for i in 0..len {
-            for j in 0..(len-i) {
-                let k = len - j - 1;
-                if ss[i] != ss[k] {
+    pub fn longest_palindrome(s: String) -> String {
+        let s: Vec<_>= s.chars().collect();
+        if s.is_empty() {
+            return "".into()
+        }
+        let mut ret = (0, 0);
+        for p in 0..s.len() {
+            for diff in vec![0, 1] {
+                let mut i = p;
+                let mut j = p + diff;
+                if p + diff >= s.len() || s[i] != s[j] {
                     continue;
                 }
-                let mut s = i;
-                let mut e = k;
-                let mut is_palindrom = true;
-                while s < e {
-                    if ss[s] != ss[e] {
-                        is_palindrom = false;
+                loop {
+                    if i == 0 || j == s.len() - 1 || s[i-1] != s[j+1] {
                         break;
                     }
-                    s += 1;
-                    e -= 1;
+                    i -= 1;
+                    j += 1;
                 }
-                if is_palindrom && (k - i) > (max_end - max_start) {
-                    max_start = i;
-                    max_end = k;
+                if j - i > ret.1 - ret.0 {
+                    ret = (i, j);
                 }
             }
+
         }
-        s.get(max_start..max_end+1).unwrap().into()
+        s[ret.0..=ret.1].iter().collect()
     }
 }
 
