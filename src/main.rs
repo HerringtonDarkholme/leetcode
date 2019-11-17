@@ -2,7 +2,7 @@
 
 #[macro_use]
 mod util;
-pub mod subarrays_with_k_distinct;
+pub mod basic_calculator_iv;
 
 fn main() {
 }
