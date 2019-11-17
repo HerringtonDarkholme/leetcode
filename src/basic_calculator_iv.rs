@@ -57,9 +57,9 @@ impl Parser {
             self.index += 1;
             let next = self.parse_term();
             if op == '+' {
-                term.add(&next);
+                term.add(next);
             } else {
-                term.sub(&next);
+                term.sub(next);
             }
         }
     }
@@ -78,7 +78,7 @@ impl Parser {
             }
             self.index += 1;
             let next = self.parse_factor();
-            factor.mul(&next);
+            factor.mul(next);
         }
     }
 
@@ -133,94 +133,73 @@ impl Parser {
     }
 }
 
-#[derive(Clone)]
-struct Term {
-    coeff: i32,
-    vars: Vec<String>,
-}
-
-impl Term {
-    fn var(var: String) -> Self {
-        Term {
-            coeff: 1,
-            vars: vec![var],
-        }
-    }
-    fn lit(coeff: i32) -> Self {
-        Term {
-            coeff,
-            vars: vec![],
-        }
-    }
-
-    fn degree(&self) -> usize {
-        self.vars.len()
-    }
-    fn is_same(&self, other: &Self) -> bool {
-        self.vars == other.vars
-    }
-    fn is_zero(&self) -> bool {
-        self.coeff == 0
-    }
-
-    // OP
-    fn add(&mut self, other: &Self) {
-        assert!(self.is_same(other));
-        self.coeff += other.coeff;
-    }
-    fn sub(&mut self, other: &Self) {
-        assert!(self.is_same(other));
-        self.coeff -= other.coeff;
-    }
-    fn mul(&mut self, other: &Self) {
-        self.coeff *= other.coeff;
-        self.vars.extend_from_slice(&other.vars);
-        self.vars.sort();
-    }
-}
-
 struct Poly {
-    terms: Vec<Vec<Term>>
+    terms: HashMap<Vec<String>, i32>
 }
 
 impl Poly {
     fn zero() -> Self {
-        Poly { terms: vec![] }
+        Poly { terms: HashMap::new() }
     }
     fn lit(coeff: i32) -> Self {
-        let term = Term::lit(coeff);
-        Poly {
-            terms: vec![vec![term]]
-        }
+        let mut terms = HashMap::new();
+        terms.insert(vec![], coeff);
+        Poly { terms }
     }
     fn var(var: String) -> Self {
-        let term = Term::var(var);
-        let terms = vec![
-            vec![], // constant
-            vec![term], // 1st degree var
-        ];
+        let mut terms = HashMap::new();
+        terms.insert(vec![var], 1);
         Poly { terms }
     }
 
-    // info
-    fn max_degree(&self) -> usize {
-        self.terms.len()
+    // op
+    fn add(&mut self, other: Self) {
+        let terms = &mut self.terms;
+        for (k, v) in other.terms {
+            *terms.entry(k).or_insert(0) += v;
+        }
+    }
+    fn sub(&mut self, other: Self) {
+        let terms = &mut self.terms;
+        for (k, v) in other.terms {
+            *terms.entry(k).or_insert(0) -= v;
+        }
+    }
+    fn mul(&mut self, other: Self) {
+        let mut new = HashMap::new();
+        let terms = &self.terms;
+        for (k, v) in other.terms {
+            for (kk, &vv) in terms.iter() {
+                let mut k = k.clone();
+                k.extend_from_slice(kk);
+                k.sort();
+                *new.entry(k).or_insert(0) += v * vv;
+            }
+        }
+        self.terms = new;
     }
 
-    // op
-    fn add(&mut self, other: &Self) {
-        unimplemented!()
-    }
-    fn sub(&mut self, other: &Self) {
-        unimplemented!()
-    }
-    fn mul(&mut self, other: &Self) {
-        unimplemented!()
-    }
     fn evaluate(&mut self, env: &HashMap<String, i32>) {
-        unimplemented!()
+        let terms = std::mem::replace(&mut self.terms, HashMap::new());
+        let new = &mut self.terms;
+        for (vars, mut coeff) in terms {
+            let mut new_vars = vec![];
+            for var in vars {
+                if let Some(&v) = env.get(&var) {
+                    coeff *= v;
+                } else {
+                    new_vars.push(var);
+                }
+            }
+            *new.entry(new_vars).or_insert(0) += coeff;
+        }
     }
-    fn to_list(&self) -> Vec<String> {
-        unimplemented!()
+    fn to_list(self) -> Vec<String> {
+        self.terms.into_iter().filter_map(|(mut k, v)| if v == 0 {
+            None
+        } else {
+            k.insert(0, v.to_string());
+            Some(k.join("*"))
+        }).collect()
     }
 }
