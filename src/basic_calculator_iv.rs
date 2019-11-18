@@ -44,7 +44,7 @@ impl Parser {
 
     // term (`+`|`-` term)*
     fn parse_expr(&mut self) -> Poly {
-        let mut term = Poly::zero();
+        let mut term = self.parse_term();
         loop {
             self.skip_white();
             if !self.has_more() {
@@ -66,7 +66,7 @@ impl Parser {
 
     // factor (`*` factor)*
     fn parse_term(&mut self) -> Poly {
-        let mut factor = Poly::zero();
+        let mut factor = self.parse_factor();
         loop {
             self.skip_white();
             if !self.has_more() {
@@ -133,6 +133,7 @@ impl Parser {
     }
 }
 
+#[derive(Debug)]
 struct Poly {
     terms: HashMap<Vec<String>, i32>
 }
@@ -195,11 +196,41 @@ impl Poly {
         }
     }
     fn to_list(self) -> Vec<String> {
-        self.terms.into_iter().filter_map(|(mut k, v)| if v == 0 {
+        let mut v: Vec<_> = self.terms.into_iter().filter_map(|(mut k, v)| if v == 0 {
             None
         } else {
             k.insert(0, v.to_string());
-            Some(k.join("*"))
-        }).collect()
+            Some(k)
+        }).collect();
+        use std::cmp::Ordering::{Less, Equal, Greater};
+        v.sort_by(|v1, v2| match v1.len().cmp(&v2.len()) {
+            Less => Greater,
+            Greater => Less,
+            Equal => v1[1..].cmp(&v2[1..])
+        });
+        v.into_iter()
+         .map(|vv| vv.join("*"))
+         .collect()
+    }
+}
+
+fn tester<E: Into<String>>(e: E, v: Vec<E>, ints: Vec<i32>) -> Vec<String> {
+    let v = v.into_iter().map(|s| s.into()).collect();
+    Solution::basic_calculator_iv(e.into(), v, ints)
+}
+
+#[test]
+fn test() {
+    for (expr, vars, ints, expect) in vec![
+        ("e + 8 - a + 5", vec!["e"], vec![1], vec!["-1*a","14"]),
+        ("e - 8 + temperature - pressure", vec!["e", "temperature"], vec![1, 12], vec!["-1*pressure","5"]),
+        ("(e + 8) * (e - 8)", vec![], vec![], vec!["1*e*e","-64"]),
+        ("7 - 7", vec![], vec![], vec![]),
+        ("a * b * c + b * a * c * 4", vec![], vec![], vec!["5*a*b*c"]),
+        ("((a - b) * (b - c) + (c - a)) * ((a - b) + (b - c) * (c - a))", vec![], vec![], vec!["-1*a*a*b*b","2*a*a*b*c","-1*a*a*c*c","1*a*b*b*b","-1*a*b*b*c","-1*a*b*c*c","1*a*c*c*c","-1*b*b*b*c","2*b*b*c*c","-1*b*c*c*c","2*a*a*b","-2*a*a*c","-2*a*b*b","2*a*c*c","1*b*b*b","-1*b*b*c","1*b*c*c","-1*c*c*c","-1*a*a","1*a*b","1*a*c","-1*b*c"])
+    ] {
+        let result = tester(expr, vars, ints);
+        let expect: Vec<String> = expect.into_iter().map(|s| s.into()).collect();
+        assert_eq!(result, expect);
     }
 }
