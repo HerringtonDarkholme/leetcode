@@ -10,20 +10,13 @@ impl Solution {
 }
 
 fn prune(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
-    if root.is_none() {
-        return root
+    if let Some(root) = root.as_mut() {
+        let mut r = root.borrow_mut();
+        r.left = prune(r.left.take());
+        r.right = prune(r.right.take());
+        if r.left.is_none() && r.right.is_none() && r.val == 0 {
+            return None
+        }
     }
-
-    let root = root.unwrap();
-    { // drop borrow_mut
-    let mut r = root.borrow_mut();
-    let left = prune(r.left.take());
-    let right = prune(r.right.take());
-    if left.is_none() && right.is_none() && r.val == 0 {
-        return None
-    }
-    r.left = left;
-    r.right = right;
-    }
-    Some(root)
+    root
 }
