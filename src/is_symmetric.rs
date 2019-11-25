@@ -5,35 +5,28 @@ use std::cell::RefCell;
 
 impl Solution {
     pub fn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-        if root.is_none() {
-            return true
-        }
-        let mut root = root.unwrap();
-        let mut root = root.borrow_mut();
-        let l = root.left.take();
-        let r = root.right.take();
-        is_sym(l, r)
+        is_sym(&root, &root)
     }
 }
 
 type Node = Option<Rc<RefCell<TreeNode>>>;
 
-fn is_sym(left: Node, right: Node) -> bool {
+fn is_sym(left: &Node, right: &Node) -> bool {
     if left.is_none() {
         return right.is_none()
     } else if right.is_none() {
         return false
     }
-    let mut left = left.unwrap();
-    let mut right = right.unwrap();
-    let mut left = left.borrow_mut();
-    let mut right = right.borrow_mut();
+    let mut left = left.as_ref().unwrap();
+    let mut right = right.as_ref().unwrap();
+    let mut left = left.borrow();
+    let mut right = right.borrow();
     if left.val != right.val {
         return false
     }
-    let ll = left.left.take();
-    let lr = left.right.take();
-    let rl = right.left.take();
-    let rr = right.right.take();
+    let ll = &left.left;
+    let lr = &left.right;
+    let rl = &right.left;
+    let rr = &right.right;
     is_sym(ll, rr) && is_sym(lr, rl)
 }
