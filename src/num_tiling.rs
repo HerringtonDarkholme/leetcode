@@ -16,6 +16,7 @@ impl Solution {
         let mut n_2 = 1;
         let mut n_sum = 1;
         while n > 2 {
+            // f(n) = f(n - 1) + f(n - 2) + 2 * (\sum{0}{n-3} f(k))
             let next = (n_1 + n_2) % MOD + (2 * n_sum) % MOD;
             n_sum = (n_sum + n_2) % MOD;
             n_2 = n_1;
