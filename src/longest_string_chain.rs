@@ -3,21 +3,24 @@ pub struct Solution;
 
 use std::collections::HashMap;
 
+const MAX: usize = 16;
 impl Solution {
     pub fn longest_str_chain(mut words: Vec<String>) -> i32 {
-        let mut map = HashMap::new();
+        let mut maps = vec![HashMap::new(); MAX + 1];
         words.sort_by_key(|w| w.len());
         let words = words.into_iter().map(|c| c.chars().collect());
         for w in words {
-            let max = map.iter()
+            let max = maps[w.len() - 1].iter()
                 .filter_map(|(pw, &c)| if is_prev(pw, &w) {
                     Some(c + 1)
                 } else {
                     None
                 }).fold(1, i32::max);
-            map.insert(w, max);
+            maps[w.len()].insert(w, max);
         }
-        map.values().cloned().fold(0, i32::max)
+        maps.into_iter().map(|map| {
+            map.values().cloned().fold(0, i32::max)
+        }).fold(0, i32::max)
     }
 }
 fn is_prev(prev: &Vec<char>, next: &Vec<char>) -> bool {
