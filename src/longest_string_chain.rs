@@ -9,12 +9,12 @@ impl Solution {
         words.sort_by_key(|w| w.len());
         let words = words.into_iter().map(|c| c.chars().collect());
         for w in words {
-            let mut max = 1;
-            for (pw, &c) in map.iter() {
-                if is_prev(pw, &w) {
-                    max = max.max(c + 1);
-                }
-            }
+            let max = map.iter()
+                .filter_map(|(pw, &c)| if is_prev(pw, &w) {
+                    Some(c + 1)
+                } else {
+                    None
+                }).fold(1, i32::max);
             map.insert(w, max);
         }
         map.values().cloned().fold(0, i32::max)
