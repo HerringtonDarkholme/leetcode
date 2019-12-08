@@ -3,20 +3,8 @@ pub struct Solution;
 
 impl Solution {
     pub fn has_alternating_bits(mut n: i32) -> bool {
-        if n & 1 == 0 {
-            aux(n)
-        } else {
-            aux(n >> 1)
-        }
+        // 10101010            1010101
+        //  1010101              10101            10101
+        (n & (n >> 1)) == 0 && (n & (n >> 2)) == (n >> 2)
     }
-}
-
-fn aux(mut n: i32) -> bool {
-    while n != 0 {
-        if (n & 3) ^ 2 != 0 {
-            return false
-        }
-        n >>= 2
-    }
-    true
 }
