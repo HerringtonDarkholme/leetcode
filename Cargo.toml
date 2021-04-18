@@ -5,3 +5,4 @@ authors = ["Herrington Darkholme <2883231+HerringtonDarkholme@users.noreply.gith
 edition = "2018"
 
 [dependencies]
+proptest = "1.0.0"

@@ -1,8 +1,7 @@
-// mod zig_zag;
-
 #[macro_use]
 mod util;
-pub mod contains_duplicate_iii;
+#[path="./1833_max_ice_cream.rs"]
+pub mod max_ice_cream;
 
 fn main() {
 }
