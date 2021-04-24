@@ -1,6 +1,6 @@
 #[macro_use]
 mod util;
-#[path="./1834_get_order.rs"]
+#[path="./1835_get_xor_sum.rs"]
 pub mod max_ice_cream;
 
 fn main() {
