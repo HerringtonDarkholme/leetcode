@@ -33,4 +33,5 @@ impl Solution {
             }
         }
         dir != N || (x == 0 && y == 0)
-    
+    }
+}
