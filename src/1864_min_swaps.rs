@@ -19,15 +19,19 @@ impl Solution {
 }
 fn swaps(mut v: Vec<i32>, mut leading: i32) -> i32 {
     let mut s = 0;
+    let mut r = 0;
     for i in 0..v.len() {
         if v[i] == leading {
             leading = 1 - leading;
             continue;
         }
         s += 1;
-        for j in i+1..v.len() {
+        r = r.max(i + 1);
+        for j in r..v.len() {
             if v[j] == leading && j % 2 != i % 2 {
                 v.swap(i, j);
+                r = j;
+                break;
             }
         }
         leading = 1 - leading;
