@@ -30,6 +30,32 @@ impl Solution {
         s[ret.0..=ret.1].iter().collect()
     }
 }
+            /*
+            
+impl Solution {
+    pub fn longest_palindrome(s: String) -> String {
+        let s: Vec<_> = s.chars().collect();
+        let (i, j) = longest(&s);
+        s[i..=j].iter().collect()
+    }
+}
+
+fn longest(s: &Vec<char>) -> (usize, usize) {
+    // make default true, so case like bb pass
+    let mut dp = vec![vec![true; s.len()]; s.len()];
+    let mut r = (0, 0);
+    for i in (0..s.len()).rev() {
+        for j in i+1..s.len() {
+            dp[i][j] = dp[i+1][j-1] && s[i] == s[j];
+            if dp[i][j] && j - i > r.1 - r.0 {
+                r = (i, j);
+            }
+        }
+    }
+    r
+}
+            
+            */
 
 #[test]
 fn test() {
