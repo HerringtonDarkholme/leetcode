@@ -1,13 +1,16 @@
-use std::collections::HashSet;
 
 impl Solution {
     pub fn open_lock(deadends: Vec<String>, target: String) -> i32 {
-        let mut seen: HashSet<_> = deadends.into_iter().collect();
-        if seen.contains("0000") {
+        let target: i32 = target.parse().unwrap();
+        let mut seen = vec![false; 10000];
+        for d in deadends {
+            seen[d.parse::<usize>().unwrap()] = true;
+        }
+        if seen[0] {
             return -1
         }
-        seen.insert("0000".to_string());
-        let mut frontier = vec!["0000".to_string()];
+        seen[0] = true;
+        let mut frontier = vec![0];
         let mut steps = 0;
         while !frontier.is_empty() {
             let mut next = vec![];
@@ -15,21 +18,20 @@ impl Solution {
                 if f == target {
                     return steps
                 }
-                for i in 0..4 {
-                    for &j in &[-1, 1] {
-                        let mut n = f.clone();
-                        let mut c = unsafe { n.as_mut_vec() };
-                        c[i] = if c[i] as i8 + j > '9' as i8 {
-                            '0' as u8
-                        } else if c[i] as i8 + j < '0' as i8 {
-                            '9' as u8
+                for i in &[1,10,100,1000] {
+                    for &j in &[1, -1] {
+                        let d = (f / i) % 10;
+                        let n = if d + j > 9 {
+                            f - 9 * i
+                        } else if d + j < 0 {
+                            f + 9 * i
                         } else {
-                            (c[i] as i8 + j) as u8
+                            f + i * j
                         };
-                        if seen.contains(&n) {
+                        if seen[n as usize] {
                             continue;
                         }
-                        seen.insert(n.clone());
+                        seen[n as usize] = true;
                         next.push(n);
                     }
                 }
