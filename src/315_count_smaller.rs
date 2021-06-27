@@ -41,7 +41,7 @@ fn count_smaller(nums: Vec<i32>) -> Vec<i32> {
     let mut bit = vec![0; SIZE as usize];
     for n in nums.into_iter().rev()  {
         let index = n + B;
-        ret.push(get_sum(&bit, index));
+        ret.push(get_sum(&bit, index - 1));
         update(&mut bit, SIZE, index, 1);
     }
     ret.reverse();
