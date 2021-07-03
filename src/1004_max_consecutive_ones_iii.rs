@@ -16,6 +16,29 @@ impl Solution {
 
 /*
 impl Solution {
+    pub fn longest_ones(nums: Vec<i32>, mut k: i32) -> i32 {
+        let mut i = 0;
+        let mut r = 0;
+        for j in 0..nums.len() {
+            if nums[j] == 1 {
+                r = r.max(j + 1 - i);
+                continue;
+            }
+            if k > 0 {
+                k -= 1;
+            } else {
+                while nums[i] != 0 {
+                    i += 1;
+                }
+                i += 1;
+            }
+            r = r.max(j + 1 - i);
+        }
+        r as i32
+    }
+}
+        
+impl Solution {
     pub fn longest_ones(a: Vec<i32>, k: i32) -> i32 {
         let k = k as usize;
         let mut zeros: Vec<_> = a.iter().enumerate()
