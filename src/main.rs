@@ -1,6 +1,6 @@
 #[macro_use]
 mod util;
-#[path="./1916_ways_to_build_rooms.rs"]
+#[path="./363_max_sum_submatrix.rs"]
 pub mod max_ice_cream;
 
 fn main() {
