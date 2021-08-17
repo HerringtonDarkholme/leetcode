@@ -1,6 +1,6 @@
 #[macro_use]
 mod util;
-#[path="./1948_delete_duplicate_folder.rs"]
+#[path="./1632_matrix_rank_transform.rs"]
 pub mod max_ice_cream;
 
 fn main() {
