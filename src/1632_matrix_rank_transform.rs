@@ -1,6 +1,6 @@
-use std::collections::BTreeMap;
-
 pub struct  Solution;
+
+use std::collections::BTreeMap;
 
 struct UF {
     parent: Vec<usize>
