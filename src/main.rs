@@ -1,6 +1,6 @@
 #[macro_use]
 mod util;
-#[path="./368_largest_divisible_subset.rs"]
+#[path="./1309_freq_alphabets.rs"]
 pub mod largest_divisible_subset;
 
 fn main() {
