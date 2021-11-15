@@ -1,7 +1,7 @@
 #[macro_use]
 mod util;
-#[path="./76_min_window.rs"]
-pub mod max_ice_cream;
+#[path="./368_largest_divisible_subset.rs"]
+pub mod largest_divisible_subset;
 
 fn main() {
 }
