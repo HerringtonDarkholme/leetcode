@@ -43,6 +43,55 @@ impl Solution {
     }
 }
 
+/*
+#[derive(Clone, Copy)]
+enum State {
+    Visited,
+    Pending,
+    ToVisit,
+}
+impl Solution {
+    pub fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
+        let mut ret = vec![];
+        let mut visited = vec![State::ToVisit; num_courses as usize];
+        let pre = build_dep(num_courses, prerequisites);
+        for i in 0..num_courses {
+            if let Some(r) = dfs(i, &mut visited, &pre) {
+                ret.extend(r.into_iter());
+            } else {
+                return vec![]
+            }
+        }
+        ret
+    }
+}
+
+fn build_dep(n: i32, pre: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    let mut r = vec![vec![]; n as usize];
+    for p in pre {
+        r[p[0] as usize].push(p[1]);
+    }
+    r
+}
+
+fn dfs(goal: i32, visited: &mut Vec<State>, deps: & Vec<Vec<i32>>) -> Option<Vec<i32>> {
+    match visited[goal as usize] {
+        State::Visited => return Some(vec![]),
+        State::Pending => return None,
+        _ => (),
+    }
+    visited[goal as usize] = State::Pending;
+    let mut ret = vec![];
+    for &d in deps[goal as usize].iter() {
+        let pre = dfs(d, visited, deps)?;
+        ret.extend(pre.into_iter());
+    }
+    visited[goal as usize] = State::Visited;
+    ret.push(goal);
+    Some(ret)
+}
+*/
+
 #[test]
 fn test() {
     for i in vec![
