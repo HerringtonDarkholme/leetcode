@@ -50,6 +50,34 @@ impl Solution {
     }
 }
 
+/*
+impl Solution {
+    pub fn merge(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        intervals.sort_by_key(|v| v[0]);
+        if intervals.len() <= 0 {
+            return intervals;
+        }
+        let mut ret = vec![];
+        let mut last_start = intervals[0][0];
+        let mut last_end = intervals[0][1];
+        for i in 1..intervals.len() {
+            let s = intervals[i][0];
+            let e = intervals[i][1];
+            if s <= last_end {
+                last_end = last_end.max(e);
+            } else {
+                ret.push(vec![last_start, last_end]);
+                last_start = s;
+                last_end = e;
+            }
+        }
+        ret.push(vec![last_start, last_end]);
+        ret
+    }
+}
+
+*/
+
 #[test]
 fn test() {
     use crate::util::test::test_cases;
