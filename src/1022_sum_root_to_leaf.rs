@@ -25,3 +25,26 @@ fn dfs(root: Option<Rc<RefCell<TreeNode>>>, prev: i32, sum: &mut i32) {
         dfs(right, prev, sum);
     }
 }
+
+/*
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    pub fn sum_root_to_leaf(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+        root.map(|c| sum(c, 0)).unwrap_or(0)
+    }
+}
+
+pub fn sum(root: Rc<RefCell<TreeNode>>, p: i32) -> i32 {
+    let mut rt = root.borrow_mut();
+    let val = p * 2 + rt.val;
+    let left = rt.left.take();
+    let right = rt.right.take();
+    match (left, right) {
+        (None, None) => val,
+        (Some(l), None) => sum(l, val),
+        (None, Some(r)) => sum(r, val),
+        (Some(l), Some(r)) => sum(l, val) + sum(r, val)
+    }
+}
+*/
