@@ -25,3 +25,26 @@ fn bsearch(piles: &Vec<i32>, h: i32, mut min: i32, mut max: i32) -> i32 {
 fn compute_hour(piles: &Vec<i32>, speed: i32) -> i32 {
     piles.iter().map(|&i| (i + speed - 1) / speed).sum()
 }
+
+/*
+
+impl Solution {
+    pub fn min_eating_speed(piles: Vec<i32>, h: i32) -> i32 {
+        let mut left = 1;
+        let mut right = 1_000_000_000;
+        while left < right {
+            let mid = left + (right - left) / 2;
+            if time(&piles, mid) <= h {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        left
+    }
+}
+fn time(piles: &[i32], k: i32) -> i32 {
+    piles.iter().map(|&p| (p + k - 1) / k).sum()
+}
+
+*/
