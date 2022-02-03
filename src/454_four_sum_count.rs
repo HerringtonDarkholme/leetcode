@@ -22,3 +22,24 @@ impl Solution {
         ret
     }
 }
+/*
+use std::collections::HashMap;
+impl Solution {
+    pub fn four_sum_count(a: Vec<i32>, b: Vec<i32>, c: Vec<i32>, d: Vec<i32>) -> i32 {
+        let mut h = HashMap::new();
+        h.reserve(2500);
+        for i in a {
+            for j in b {
+                *h.entry(i + j).or_insert(0) += 1;
+            }
+        }
+        let mut ret = 0;
+        for i in c {
+            for j in d {
+                ret += *h.get(&(-i - j)).unwrap_or(&0);
+            }
+        }
+        ret
+    }
+}
+*/
