@@ -22,3 +22,26 @@ impl Solution {
         }
     }
 }
+
+impl Solution {
+    pub fn remove_kdigits(num: String, mut k: i32) -> String {
+        let mut stack = vec![];
+        for n in num.bytes() {
+            while !stack.is_empty() && stack[stack.len() - 1] > n && k > 0 {
+                k -= 1;
+                stack.pop();
+            }
+            stack.push(n);
+        }
+        while k > 0 {
+            stack.pop();
+            k -= 1;
+        }
+        let s = stack.into_iter().skip_while(|&c| c == b'0').map(|c| c as char).collect::<String>();
+        if s.is_empty() {
+            "0".into()
+        } else {
+            s
+        }
+    }
+}
