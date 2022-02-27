@@ -4,4 +4,3 @@ mod util;
 pub mod largest_divisible_subset;
 
 fn main() {}
-
