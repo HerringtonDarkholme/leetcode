@@ -19,11 +19,7 @@ fn find(n: i32, tops: &[i32], bottoms: &[i32]) -> i32 {
     let mut bot_mut = 0;
     for i in 1..tops.len() {
         if tops[i] == n {
-            bot_mut += if bottoms[i] == n {
-                0
-            } else {
-                1
-            };
+            bot_mut += if bottoms[i] == n { 0 } else { 1 };
         } else if bottoms[i] == n {
             top_mut += 1;
         } else {
