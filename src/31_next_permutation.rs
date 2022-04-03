@@ -53,3 +53,45 @@ fn reverse(nums: &mut [i32]) {
             j -= 1;
         }
     }
+
+impl Solution {
+    pub fn next_permutation(nums: &mut Vec<i32>) {
+        let e = find_last_decreasing(nums);
+        if e > 0 {
+            swap_next_large(nums, e);
+        }
+        reverse_trailing(nums, e);
+    }
+}
+
+fn find_last_decreasing(nums: &[i32]) -> usize {
+    for i in (1..nums.len()).rev() {
+        if nums[i - 1] < nums[i] {
+            return i
+        }
+    }
+    0
+}
+fn swap_next_large(nums: &mut [i32], e: usize) {
+    for i in (e..nums.len()).rev() {
+        if nums[i] > nums[e - 1] {
+            nums.swap(i, e - 1);
+            break;
+        }
+    }
+}
+fn reverse_trailing(nums: &mut [i32], e: usize) {
+    let mut left = e;
+    let mut right = nums.len() - 1;
+    while left < right {
+        nums.swap(left, right);
+        left += 1;
+        right -= 1;
+    }
+}
+// 1 2 3 9
+// 1 2 4 3
+// 1 3 2 4
+// 1 3 4 2
+// 1 2 3 4 5 6 3 2
+//           e
