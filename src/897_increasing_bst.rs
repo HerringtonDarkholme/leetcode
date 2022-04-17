@@ -24,3 +24,27 @@ fn increase(root: Option<Rc<RefCell<TreeNode>>>, cur: &mut Rc<RefCell<TreeNode>>
     *cur = rt;
     increase(right, cur);
 }
+
+/*
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    pub fn increasing_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+        increase(root, None)
+    }
+}
+
+fn increase(root: Option<Rc<RefCell<TreeNode>>>, tail: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+    if root.is_none() {
+        return tail
+    }
+    let mut rt = root.unwrap();
+    let (left, right) = {
+        let mut root = rt.borrow_mut();
+        (root.left.take(), root.right.take())
+    };
+    let res = increase(left, Some(rt.clone()));
+    rt.borrow_mut().right = increase(right, tail);
+    res
+}
+*/
