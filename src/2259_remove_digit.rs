@@ -1,4 +1,3 @@
-
 impl Solution {
     pub fn remove_digit(number: String, digit: char) -> String {
         let nums: Vec<_> = number.chars().collect();
