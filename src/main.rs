@@ -1,7 +1,7 @@
 #[macro_use]
 mod util;
-#[path = "./1309_freq_alphabets.rs"]
-pub mod largest_divisible_subset;
+#[path = "./recursive_remove_adjacent_duplicates.rs"]
+pub mod remove_adj;
 
 fn main() {}
 
