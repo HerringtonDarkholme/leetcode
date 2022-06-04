@@ -78,3 +78,48 @@ fn test() {
     dbg!(Solution::solve_n_queens(2));
     dbg!(Solution::solve_n_queens(4));
 }
+
+/*
+ *
+ *
+impl Solution {
+    pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
+        let n = n as usize;
+        let mut pos = vec![];
+        let mut ret = vec![];
+        solve(n, &mut pos, 0, 0, 0, &mut ret);
+        ret.into_iter().map(to_ans).collect()
+    }
+}
+
+fn solve(n: usize, pos: &mut Vec<usize>, col: i32, diag1: i32, diag2: i32, ret: &mut Vec<Vec<usize>>) {
+    if pos.len() == n {
+        ret.push(pos.clone());
+        return;
+    }
+    let r = pos.len();
+    for c in 0..n {
+        if (1 << c) & col != 0 {
+            continue;
+        }
+        let d1 = r - c + n;
+        if (1 << d1) & diag1 != 0 {
+            continue;
+        }
+        if (1 << (r + c)) & diag2 != 0 {
+            continue;
+        }
+        pos.push(c);
+        solve(n, pos, col | (1 << c), diag1 | (1 << d1) , diag2 | (1 << (r + c)), ret);
+        pos.pop();
+    }
+}
+
+fn to_ans(r: Vec<usize>) -> Vec<String> {
+    let mut ret = vec![vec!['.'; r.len()]; r.len()];
+    for (r, c) in r.into_iter().enumerate() {
+        ret[r][c] = 'Q';
+    }
+    ret.into_iter().map(|r| r.into_iter().collect()).collect()
+}
+ */
