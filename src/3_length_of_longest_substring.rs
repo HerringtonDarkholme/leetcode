@@ -32,3 +32,24 @@ fn test() {
         println!("{} {}", test, Solution::length_of_longest_substring(test.into()));
     }
 }
+
+/*
+impl Solution {
+    pub fn length_of_longest_substring(s: String) -> i32 {
+        let mut seen = [-1; 128];
+        let mut start = 0;
+        let mut max = 0;
+        for (i, c) in s.bytes().enumerate() {
+            let i = i as i32;
+            let c = c as usize;
+            let j = seen[c];
+            if j >= start {
+                start = j + 1;
+            }
+            seen[c] =  i;
+            max = max.max(i - start + 1);
+        }
+        max as i32
+    }
+}
+*/
