@@ -23,3 +23,17 @@ impl Solution {
         ret
     }
 }
+
+
+/*
+impl Solution {
+    pub fn reconstruct_queue(mut people: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        let mut ret = vec![];
+        people.sort_by_key(|v| (-v[0], v[1]));
+        for p in people {
+            ret.insert(p[1] as usize, p);
+        }
+        ret
+    }
+}
+*/
