@@ -6,140 +6,147 @@ pub mod remove_adj;
 fn main() {}
 
 #[test]
-fn test() {}
+fn test() {
+    // assert_eq!(Solution::people_aware_of_secret(6, 2, 4), 5);
+    // assert_eq!(Solution::people_aware_of_secret(4, 1, 3), 6);
+    assert_eq!(Solution::count_paths(nested![[1,1],[3,4]]), 8);
+    assert_eq!(Solution::count_paths(nested![[1,2]]), 3);
+    assert_eq!(Solution::count_paths(nested![
+            [1,2,4,4,3,2,3],
+            [2,8,3,4,5,6,9],
+            [3,4,1,2,3,6,8],
+    ]), 105);
+}
 
 struct Solution;
 
 impl Solution {
-    pub fn check_x_matrix(grid: Vec<Vec<i32>>) -> bool {
-        let n = grid.len();
-        for i in 0..n {
-            for j in 0..n {
-                let need_one = i == j || i + j == n - 1;
-                let is_zero = grid[i][j] == 0;
-                if need_one && !is_zero || !need_one && is_zero {
-                    continue;
-                }
-                return false;
+    pub fn decode_message(key: String, message: String) -> String {
+        let mut keys = vec![-1; 26];
+        let mut start = 0;
+        for c in key.bytes() {
+            if c == b' ' {
+                continue;
             }
+            let i = (c - b'a') as usize;
+            if keys[i] >=0 {
+                continue;
+            }
+            keys[i] = start;
+            start += 1;
         }
-        true
+        let mut ret = String::new();
+        for c in message.bytes() {
+            if c == b' ' {
+                ret.push(' ');
+                continue;
+            }
+            let i = (c - b'a') as usize;
+            let decoded = (keys[i] as u8 + b'a') as char;
+            ret.push(decoded);
+        }
+        ret
     }
 }
 
+// impl Solution {
+//     pub fn spiral_matrix(m: i32, n: i32, mut head: Option<Box<ListNode>>) -> Vec<Vec<i32>> {
+//         let mut matrix = vec![vec![-1; n as usize]; m as usize];
+//         let mut seen = vec![vec![false; n as usize]; m as usize];
+//         let mut dr = vec![0, 1, 0, -1];
+//         let mut dc = vec![1, 0 , -1, 0];
+//         let mut x = 0;
+//         let mut y = 0;
+//         let mut di = 0;
+//         while let Some(h) = head {
+//             let val = h.val;
+//             matrix[x as usize][y as usize] = val;
+//             seen[x as usize][y as usize] = true;
+//             let cr = x + dr[di];
+//             let cc = y + dc[di];
+//             if cr >= 0 && cr < m && cc >= 0 && cc < n && !seen[cr as usize][cc as usize] {
+//                 x = cr;
+//                 y = cc;
+//             } else {
+//                 di = (di + 1) % 4;
+//                 x += dr[di];
+//                 y += dc[di];
+//             }
+//             head = h.next;
+//         }
+//         matrix
+//     }
+// }
+//     x--------------f
+// [0, 0, 1, 0]
+// use std::collections::VecDeque;
+// const M: i64 = 1_000_000_007;
+impl Solution {
+    pub fn people_aware_of_secret(n: i32, delay: i32, forget: i32) -> i32 {
+        let mut people = VecDeque::new();
+        people.resize(forget as usize, 0);
+        people[0] = 1;
+        let mut spread = 0;
+        let mut known = 1;
+        people[0] = 1;
+        for _ in 1..n {
+            let f = people[forget as usize - 1];
+            if known >= f {
+                known -= f;
+            } else {
+                known = (known + M - f) % M;
+            }
+            if spread >= f {
+                spread -= f;
+            } else {
+                spread = (spread + M - f) % M;
+            }
+            spread = (spread + people[delay as usize - 1]) % M;
+            known = (known + spread) % M;
+            people.pop_back();
+            people.push_front(spread);
+        }
+        (known % M) as i32
+    }
+}
+
+use std::collections::VecDeque;
 const M: i64 = 1_000_000_007;
 impl Solution {
-    pub fn count_house_placements(n: i32) -> i32 {
-        let n = n as i64;
-        let mut total = 1;
-        let mut unplaced = 1;
-        for _ in 0..n {
-            let next_placed = unplaced;
-            let next_unplaced = total;
-            total = (next_placed + next_unplaced) % M;
-            unplaced = next_unplaced;
-        }
-        ((total * total) % M) as i32
-    }
-}
-
-// total(n) = placed(n) + unplaced(n)
-// placed(n) = unplaced(n-1)
-// unplaced(n) = total(n-1)
-// total(n) = unplaced(n-1) + total(n - 1)
-
-impl Solution {
-    pub fn maximums_spliced_array(mut nums1: Vec<i32>, mut nums2: Vec<i32>) -> i32 {
-        let sum1: i32 = nums1.iter().sum();
-        let sum2: i32 = nums2.iter().sum();
-        let mut max1 = 0;
-        let mut acc1 = 0;
-        let mut max2 = 0;
-        let mut acc2 = 0;
-        for i in 0..nums1.len() {
-            let diff = nums2[i] - nums1[i];
-            acc1 += diff;
-            acc2 -= diff;
-            max1 = max1.max(acc1);
-            max2 = max2.max(acc2);
-            acc1 = acc1.max(0);
-            acc2 = acc2.max(0);
-        }
-        (max1 + sum1).max(max2 + sum2)
-    }
-}
-
-/*
-[28,34,38,14,30,31,23, 7,28, 3] 236
-[42,35, 7, 6,24,30,14,21,20,34] 233
- */
-
-impl Solution {
-    pub fn minimum_score(nums: Vec<i32>, edges: Vec<Vec<i32>>) -> i32 {
-        let mut min = i32::MAX;
-        for i in 0..edges.len() {
-            for j in 0..edges.len() {
-                if i == j {
-                    continue;
-                }
-                min = min.min(check(&nums, &edges, i, j));
+    pub fn count_paths(grid: Vec<Vec<i32>>) -> i32 {
+        let r = grid.len();
+        let c = grid[0].len();
+        let mut dp = vec![vec![0; c]; r];
+        let mut ret = 0;
+        for x in 0..r {
+            for y in 0..c {
+                ret += dfs(r, c, x as i32, y as i32, &mut dp, &grid);
+                ret %= M;
             }
         }
-        min
+        ret as i32
     }
 }
 
-use std::collections::HashMap;
-fn check(nums: &[i32], edges: &[Vec<i32>], exclude1: usize, exclude2: usize) -> i32 {
-    let mut dsu = DSU::new(nums.len());
-    for i in 0..edges.len() {
-        if i == exclude1 || i == exclude2 {
+fn dfs(r: usize, c: usize, row: i32, col: i32, dp: &mut Vec<Vec<i64>>,  grid: &Vec<Vec<i32>>) -> i64 {
+    if dp[row as usize][col as usize] > 0 {
+        return dp[row as usize][col as usize]
+    }
+
+    let mut count = 1;
+    for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)] {
+        let nr = row + dx;
+        let nc = col + dy;
+        if !(nr >= 0 && nr < r as i32 && nc >=0 && nc < c as i32) {
             continue;
         }
-        dsu.union(edges[i][0] as usize, edges[i][1] as usize);
-    }
-    let mut map = HashMap::new();
-    for i in 0..nums.len() {
-        let p = dsu.find(i);
-        *map.entry(p).or_insert(0) ^= nums[i];
-    }
-    let max = *map.values().max().unwrap();
-    let min = *map.values().min().unwrap();
-    max - min
-}
-
-pub struct DSU {
-    pub parent: Vec<usize>,
-    pub rank: Vec<usize>
-}
-
-impl DSU {
-    pub fn new(size: usize) -> Self {
-        DSU {
-            parent: (0..size).collect(),
-            rank: vec![0; size],
+        let val = grid[row as usize][col as usize];
+        let neighbor = grid[nr as usize][nc as usize];
+        if val < neighbor {
+            let neighbor_count = dfs(r, c, nr, nc, dp, grid);
+            count = (count + neighbor_count) % M;
         }
     }
-    pub fn find(&mut self, x: usize) -> usize {
-        if self.parent[x] != x {
-            self.parent[x] = self.find(self.parent[x])
-        }
-        self.parent[x]
-    }
-
-    pub fn union(&mut self, x: usize, y: usize) -> bool {
-        let (xr, yr) = (self.find(x), self.find(y));
-        if xr == yr {
-            return false
-        }
-        if self.rank[xr] < self.rank[yr] {
-            self.parent[xr] = yr;
-        } else if self.rank[xr] > self.rank[yr] {
-            self.parent[yr] = xr
-        } else {
-            self.parent[yr] = xr;
-            self.rank[xr] += 1;
-        }
-        true
-    }
+    dp[row as usize][col as usize] = count;
+    count
 }
