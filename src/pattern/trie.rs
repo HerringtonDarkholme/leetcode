@@ -1,3 +1,6 @@
+struct Trie {
+    children: Vec<Option<Trie>>
+}
 
 impl Trie {
     fn new() -> Self {
@@ -29,4 +32,4 @@ impl Trie {
             -1
         }
     }
-}
+}j
