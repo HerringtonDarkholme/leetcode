@@ -26,24 +26,23 @@ fn search(matrix: &Vec<Vec<i32>>, sr: i32, er: i32, sc: i32, ec: i32 ,target: i3
 /*
 impl Solution {
     pub fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {
+        let row = matrix.len() as i32;
         let mut r = 0;
-        let mut c = matrix[0].len() - 1;
-        while r < matrix.len() {
-            if matrix[r][c] == target {
-                return true;
-            }
-            if matrix[r][c] < target {
+        let mut c = matrix[0].len() as i32 - 1;
+        while r < row && c >= 0 {
+            let n = matrix[r as usize][c as usize];
+            if n == target {
+                return true
+            } else if n < target {
                 r += 1;
             } else {
-                if c == 0 {
-                    break;
-                }
                 c -= 1;
             }
         }
         false
     }
 }
+
 
 // we start at the top right, it is monotonous
 // all numbers left to it is less and all numbers below are greater
