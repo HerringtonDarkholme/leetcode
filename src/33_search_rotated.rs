@@ -2,36 +2,34 @@ pub struct Solution;
 
 impl Solution {
     pub fn search(nums: Vec<i32>, target: i32) -> i32 {
-        if nums.is_empty() {
-            return -1
-        }
-        let mut low = 0;
-        let mut high = nums.len() - 1;
-        while low < high {
-            let mid = low + (high - low) / 2;
+        let mut left = 0;
+        let mut right = nums.len() - 1;
+        while left < right {
+            let mid = left + (right - left) / 2;
             let e = nums[mid];
             if e == target {
                 return mid as i32
             }
-            let search_second = if e > nums[high] {
-                e <= target || target <= nums[high]
+            let search_right = 
+                if e > nums[right] { // peak on right
+                    e < target || nums[right] >= target
+                } else { // peak on left
+                    e < target && nums[right] >= target
+                };
+            if search_right {
+                left = mid + 1;
             } else {
-                e <= target && target <= nums[high]
-            };
-            if search_second {
-                low = mid + 1;
-            } else {
-                high = mid;
+                right = mid;
             }
         }
-        if nums[low] == target {
-            low as i32
+        if nums[left] == target {
+            left as i32
         } else {
             -1
         }
-
     }
 }
+
 
 /*
 impl Solution {
