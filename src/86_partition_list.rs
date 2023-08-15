@@ -56,3 +56,27 @@ impl Solution {
         less
     }
 }
+
+/*
+impl Solution {
+    pub fn partition(mut head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode>> {
+        let mut dummy_less = ListNode::new(0);
+        let mut dummy_greater = ListNode::new(0);
+        let mut less = &mut dummy_less;
+        let mut greater = &mut dummy_greater;
+        while let Some(hd) = head {
+            head = hd.next;
+            let next = Some(Box::new(ListNode::new(hd.val)));
+            if hd.val >= x {
+                greater.next = next;
+                greater = greater.next.as_deref_mut().unwrap();
+            } else {
+                less.next = next;
+                less = less.next.as_deref_mut().unwrap();
+            }
+        }
+        less.next = dummy_greater.next.take();
+        dummy_less.next
+    }
+}
+*/
