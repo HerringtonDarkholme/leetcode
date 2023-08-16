@@ -1,3 +1,33 @@
+use std::collections::VecDeque;
+
+impl Solution {
+    pub fn max_sliding_window(nums: Vec<i32>, k: i32) -> Vec<i32> {
+        let k = k as usize;
+        let mut stack = VecDeque::with_capacity(k);
+        for i in 0..k {
+            let num = nums[i];
+            while !stack.is_empty() && nums[stack[stack.len() - 1]] <= num {
+                stack.pop_back();
+            }
+            stack.push_back(i);
+        }
+        let mut ret = vec![nums[stack[0]]];
+        for i in k..nums.len() {
+            // remove element outside of sliding window
+            if i - k >= stack[0] {
+                stack.pop_front();
+            }
+            while !stack.is_empty() && nums[stack[stack.len() - 1]] <= nums[i] {
+                stack.pop_back();
+            }
+            stack.push_back(i);
+            ret.push(nums[stack[0]]);
+        }
+        ret
+    }
+}
+
+/*
 use std::collections::BTreeMap;
 
 impl Solution {
@@ -26,3 +56,4 @@ impl Solution {
         ret
     }
 }
+*/
