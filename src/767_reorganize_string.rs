@@ -1,3 +1,33 @@
+use std::collections::BinaryHeap;
+
+impl Solution {
+    pub fn reorganize_string(s: String) -> String {
+        let mut counter = vec![0; 26];
+        for c in s.bytes() {
+            counter[(c - b'a') as usize] += 1;
+        }
+        let mut heap: BinaryHeap<_> = counter
+            .into_iter()
+            .enumerate()
+            .filter(|b| b.1 != 0)
+            .map(|(c, cnt)| (cnt, c))
+            .collect();
+        let mut ret = String::new();
+        let mut last = heap.pop().unwrap();
+        ret.push((last.1 as u8 + b'a') as char);
+        last.0 -= 1;
+        while !heap.is_empty() {
+            let (count, c) = heap.pop().unwrap();
+            ret.push((c as u8 + b'a') as char);
+            if last.0 > 0 {
+                heap.push(last);
+            }
+            last = (count - 1, c);
+        }
+        if last.0 > 0 { "".into() } else { ret }
+    }
+}
+
 pub struct Solution;
 
 use std::cmp::Ordering;
