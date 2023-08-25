@@ -1,3 +1,33 @@
+/*
+impl Solution {
+    pub fn is_interleave(s1: String, s2: String, s3: String) -> bool {
+        let s1 = s1.as_bytes();
+        let s2 = s2.as_bytes();
+        let s3 = s3.as_bytes();
+        if s1.len() + s2.len() != s3.len() {
+            return false;
+        }
+        // for first n char in s3, can we interleave with m char from s2
+        let mut dp = vec![false; s2.len() + 1]; 
+        dp[0] = true; // first 0 char in s3 matches 0 char from s2
+        for i in 0..s3.len() {
+            let mut next = vec![false; s2.len() + 1];
+            next[0] = if i < s1.len() { dp[0] && s1[i] == s3[i] } else { false };
+            // take j char from s2
+            let least = if i + 1 > s1.len() { i + 1 - s1.len() } else { 1 };
+            let most = (i+1).min(s2.len());
+            for j in least..=most {
+                next[j] = 
+                    dp[j] && s1[i - j] == s3[i] ||  // add s1 to last
+                    dp[j - 1] && s2[j - 1] == s3[i]; // add s2 to last
+            }
+            dp = next;
+        }
+        dp[dp.len() - 1]
+    }
+}
+*/
+
 // leetcode 97
 pub struct Solution;
 
