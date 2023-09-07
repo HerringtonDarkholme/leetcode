@@ -52,3 +52,33 @@ fn reverse(node: &mut Box<ListNode>, mut n: i32) {
         (*end).next = h;
     }
 }
+
+
+impl Solution {
+    pub fn reverse_between(mut head: Option<Box<ListNode>>, left: i32, right: i32) -> Option<Box<ListNode>> {
+        let mut i = 1;
+        let mut reversed_head = &mut head;
+        while i < left {
+            reversed_head = &mut reversed_head.as_mut().unwrap().next;
+            i += 1;
+        }
+        let mut reversed = reversed_head.take();
+        let mut prev = None;
+        let last = &reversed.as_ref().unwrap().next as *const Option<Box<ListNode>>;
+        let mut curr = &mut reversed;
+        while i <= right {
+            let c = curr.as_mut().unwrap();
+            let next = c.next.take();
+            c.next = prev;
+            prev = curr.take();
+            *curr = next;
+            i += 1;
+        }
+        let tail = curr.take();
+        unsafe {
+            *(last as *mut Option<Box<ListNode>>) = tail;
+        }
+        *reversed_head = prev;
+        head
+    }
+}
