@@ -25,3 +25,33 @@ impl Solution {
         sum
     }
 }
+/*
+use std::collections::HashMap;
+impl Solution {
+    pub fn min_operations(mut nums: Vec<i32>, x: i32) -> i32 {
+        nums.push(0);
+        nums.insert(0, 0);
+        let mut map = HashMap::new();
+        let mut sum = 0;
+        for (i, &n) in nums.iter().rev().enumerate() {
+            sum += n;
+            map.insert(sum, i);
+        }
+        sum = 0;
+        let mut min = -1;
+        for (i, &n) in nums.iter().enumerate() {
+            sum += n;
+            if let Some(j) = map.get(&(x - sum)) {
+                if j + i > nums.len() - 2 {
+                    continue;
+                }
+                min = if min < 0 { (i + j) as i32 } else {
+                    min.min((i + j) as i32)
+                };
+            }
+        }
+        min
+    }
+}
+
+*/
