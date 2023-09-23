@@ -41,3 +41,25 @@ fn is_prev(prev: &Vec<char>, next: &Vec<char>) -> bool {
     }
     true
 }
+
+/*
+use std::collections::HashMap;
+impl Solution {
+    pub fn longest_str_chain(mut words: Vec<String>) -> i32 {
+        let mut map = HashMap::new();
+        words.sort_by_key(|s| s.len());
+        let mut ret = 0;
+        for word in words {
+            let mut max = 0;
+            for i in 0..word.len() {
+                let prev = format!("{}{}", &word[0..i], &word[i+1..]);
+                let n = *map.get(&prev).unwrap_or(&0);
+                max = max.max(n);
+            }
+            map.insert(word, max + 1);
+            ret = ret.max(max + 1);
+        }
+        ret
+    }
+}
+*/
