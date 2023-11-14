@@ -52,3 +52,32 @@ impl Solution {
         r
     }
 }
+
+use std::collections::HashSet;
+
+impl Solution {
+    pub fn count_palindromic_subsequence(s: String) -> i32 {
+        let mut pos = vec![(-1, -1); 26];
+        for (i, b) in s.bytes().enumerate() {
+            let idx = (b - b'a') as usize;
+            if pos[idx].0 < 0 {
+                pos[idx].0 = i as i32;
+            } else {
+                pos[idx].1 = i as i32;
+            }
+        }
+        let bytes = s.as_bytes();
+        let mut ret = 0;
+        for  (s, e) in pos {
+            if s < 0 || e < 0 {
+                continue;
+            }
+            let mut set = HashSet::new();
+            for j in s+1..e {
+                set.insert(bytes[j as usize]);
+            }
+            ret += set.len();
+        } 
+        ret as i32
+    }
+}
