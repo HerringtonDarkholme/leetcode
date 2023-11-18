@@ -19,3 +19,23 @@ impl Solution {
         max as i32
     }
 }
+
+/*
+
+impl Solution {
+    pub fn max_frequency(mut nums: Vec<i32>, k: i32) -> i32 {
+        nums.sort_unstable();
+        let mut left = 0;
+        let mut sum = 0;
+        for (right, &num) in nums.iter().enumerate() {
+            sum += num;
+            // count the diff between sum and expected
+            if (right - left + 1) as i32 * num - sum > k {
+                sum -= unsafe { nums.get_unchecked(left) };
+                left += 1; // shrink by one cuz only the longest length is desired
+            }
+        }   
+        (nums.len() - left) as i32
+    }
+}
+*/
