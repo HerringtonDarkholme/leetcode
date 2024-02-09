@@ -53,4 +53,37 @@ impl Solution {
         rets.into_iter().next().unwrap_or(vec![])
     }
 }
+
+impl Solution {
+    pub fn largest_divisible_subset(mut nums: Vec<i32>) -> Vec<i32> {
+        nums.sort();
+        let mut tree = vec![vec![]];
+        for num in nums { build_tree(&mut tree, num); }
+        build_set(&tree)
+    }
+}
+fn build_tree(tree: &mut Vec<Vec<(i32, i32)>>, num: i32) {
+    for i in (0..tree.len()).rev() {
+        for (prev_idx, (prev, _)) in tree[i].iter().enumerate() {
+            if num % prev != 0 { continue; }
+            let entry = (num, prev_idx as i32);
+            if i + 1 == tree.len() { tree.push(vec![]); }
+            tree[i + 1].push(entry);
+            return;
+        }
+    }
+    tree[0].push((num, 0));
+}
+
+fn build_set(tree: &Vec<Vec<(i32, i32)>>) -> Vec<i32> {
+    let (mut start, mut i) = (tree.len() - 1, 0 );
+    let mut ret = vec![];
+    loop {
+        let (elem, next) = tree[start][i];
+        ret.push(elem);
+        if start == 0 { break ret; }
+        start -= 1;
+        i = next as usize;
+    }
+}
 */
