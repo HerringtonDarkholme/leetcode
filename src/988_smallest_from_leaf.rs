@@ -100,3 +100,28 @@ fn smallest_from_leaf(root: Option<Rc<RefCell<TreeNode>>>, mut p: Vec<u8>) -> Ve
         l_vec.min(r_vec)
     }
 }
+
+
+use std::rc::Rc;
+use std::cell::RefCell;
+use std::collections::VecDeque;
+impl Solution {
+    pub fn smallest_from_leaf(root: Option<Rc<RefCell<TreeNode>>>) -> String {
+        let mut max = VecDeque::new();
+        let mut p = VecDeque::new();
+        s(root, &mut p, &mut max);
+        max.into_iter().map(|c| (b'a' + c as u8) as char).collect()
+    }
+}
+
+fn s(root: Option<Rc<RefCell<TreeNode>>>, p: &mut VecDeque<i32>, max: &mut VecDeque<i32>) {
+    let Some(root) = root else { return };
+    let mut root = root.borrow_mut();
+    p.push_front(root.val);
+    if root.left.is_none() && root.right.is_none() {
+        if p < max || max.is_empty() { *max = p.clone(); }
+    }
+    s(root.left.take(), p, max);
+    s(root.right.take(), p, max);
+    p.pop_front();
+}
