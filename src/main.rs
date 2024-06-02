@@ -12,4 +12,3 @@ fn test() {
 }
 
 struct Solution;
-
