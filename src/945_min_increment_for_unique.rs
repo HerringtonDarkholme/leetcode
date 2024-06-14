@@ -17,3 +17,17 @@ impl Solution {
         ret
     }
 }
+/*
+impl Solution {
+    pub fn min_increment_for_unique(mut nums: Vec<i32>) -> i32 {
+        nums.sort_unstable();
+        let mut prev = -1;
+        let mut ret = 0;
+        for n in nums {
+            ret += (prev + 1 - n).max(0);
+            prev = n.max(prev + 1);
+        }
+        ret
+    }
+}
+*/
